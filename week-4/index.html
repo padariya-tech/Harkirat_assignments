@@ -8,7 +8,7 @@
     let oldTodoState = [];
 
     function addTodoToDom() {
-      
+
     }
 
     function removeTodoFromDom(todo) {
@@ -25,12 +25,37 @@
       // 1. added
       // 2. deleted
       // 3. updated
+
       const added = [];
       const deleted = [];
       const updated = [];
       // calculate these 3 arrays
       // call addTodo, removeTodo, updateTodo functions on each of the
       // elements
+      let oldTodoslength = oldTodoState.length;
+      let newTodolength = newTodos.length;
+      if(oldTodoslength>newTodolength)
+      {
+       
+        const objectsOnlyInArray1 = oldTodoState.filter(obj1 => !newTodos.some(obj2 => obj1.id === obj2.id));
+        deleted.push(objectsOnlyInArray1);
+        removeTodoFromDom(objectsOnlyInArray1)
+        
+      }
+      else if(oldTodoslength<newTodolength)
+      {
+        
+        const objectsOnlyInArray2 = newTodos.filter(obj1 => !oldTodoState.some(obj2 => obj1.id === obj2.id));
+        added.push(objectsOnlyInArray2);
+        addTodoToDom(objectsOnlyInArray2);
+      }
+      else
+      {
+        const objectsOnlyInArray2 = newTodos.filter(obj1 => !oldTodoState.some(obj2 => obj1.id === obj2.id));
+        updated.push(objectsOnlyInArray2);
+        const objectsOnlyInArray1 = oldTodoState.filter(obj1 => !newTodos.some(obj2 => obj1.id === obj2.id));
+        updateTodoInDom(objectsOnlyInArray1,objectsOnlyInArray2)
+      }
       oldTodoState = newTodos;
     }
 
